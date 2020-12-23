@@ -31,8 +31,8 @@
         ####### ESTO IMPEDIA QUE SE PUDIERA VER EL MENU ########################
         #'security/ir.model.access.csv',
         ###############################
-        'views/views_compras.xml',
-        'views/views_ventas.xml',
+        #'views/views_compras.xml',
+        #'views/views_ventas.xml',
         #'views/templates.xml',
         ####### CARGA AUTOMATICA AL INSTALAR DE DATOS ESTATICOS ########################
         #'static/xls/guias_pma.fincas_pma.csv',
