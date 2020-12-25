@@ -23,7 +23,7 @@
     'version': '0.2020-12-21 - 14:00',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'fincas_pma'],
+    'depends': ['base', 'stock', 'fincas_pma'],
 
     # always loaded: Aqui se cargan los formularios de vista.
     # IMPORTANTE: SE QUITA EL CARACTER "#" PARA QUE SE PUEDA CARGAR ARCHIVO CON LA LISTA DE ACCESO DE SEGURIDAD
@@ -35,7 +35,7 @@
         #'views/views_ventas.xml',
         #'views/templates.xml',
         ####### CARGA AUTOMATICA AL INSTALAR DE DATOS ESTATICOS ########################
-        #'static/xls/guias_pma.fincas_pma.csv',
+        'static/xls/product.template.csv',
         ###############################
     ],
     # only loaded in demonstration mode

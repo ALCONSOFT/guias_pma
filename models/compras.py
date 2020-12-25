@@ -31,31 +31,38 @@ class GuiasPurchase_Order(models.Model):
     tara = fields.Float("-Tara [Lbs]", tracking=True)
     neto = fields.Float("-Neto [Lbs]", tracking=True)
 
-    class GuiasPurchase_OrderLine(models.Model):
-        _inherit = 'purchase.order.line'    
+class GuiasPurchase_OrderLine(models.Model):
+    _inherit = 'purchase.order.line'
+
+    active = fields.Boolean('Activo', default=True)
+    secuencia_guia = fields.Integer(string="-Secuencia_guia")
+    bruto = fields.Float("-Bruto [Lbs]", tracking=True)
+    tara = fields.Float("-Tara [Lbs]", tracking=True)
+    neto = fields.Float("-Neto [Lbs]", tracking=True)
+
     #id|
-    # name|
-    # sequence|
-    # product_qty|
-    # product_uom_qty|
+    # name|                     <> '[MP-001] CAÑA DE AZUCAR'
+    # sequence|                 <> 10
+    # product_qty|              <> lbs -> Kg x1.0
+    # product_uom_qty|          <> lbs -> Kg x1.0 
     # date_planned|
-    # product_uom|
-    # product_id|
-    # price_unit|
-    # price_subtotal|
-    # price_total|
-    # price_tax|
-    # order_id|
+    # product_uom|              <> 1
+    # product_id|               <> 2 - [MP-001]
+    # price_unit|               <> 0.00
+    # price_subtotal|           <> 0.00
+    # price_total|              <> 0.00
+    # price_tax|                <> 0.00
+    # order_id|                 <> viene del encabezado!!!
     # account_analytic_id|
-    # company_id|
-    # state|
-    # qty_invoiced|
-    # qty_received_method|
-    # qty_received|
-    # qty_received_manual|
+    # company_id|               <> 1
+    # state|                    <> 'purchase'
+    # qty_invoiced|     
+    # qty_received_method|      <> 'stock_moves'
+    # qty_received|             <?> 0.00
+    # qty_received_manual|      <?> 0.00
     # qty_to_invoice|
-    # partner_id|
-    # currency_id|
+    # partner_id|               <> Proveedor
+    # currency_id|              <> 16 ??
     # display_type|
     # create_uid|
     # create_date|
