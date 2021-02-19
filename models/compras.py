@@ -105,6 +105,11 @@ class GuiasPurchase_OrderLine(models.Model):
     bruto = fields.Float("-Bruto [Lbs]", tracking=True)
     tara = fields.Float("-Tara [Lbs]", tracking=True)
     neto = fields.Float("-Neto [Lbs]", tracking=True)
+    # 2021-02-13: 14:25
+    contrato = fields.Many2one('maintenance.equipment',string="Equipo Acarreo:", tracking=True, required=True)
+    alce = fields.Many2one('maintenance.equipment',string="Equipo CyA:", tracking=True, required=True)
+    caja = fields.Many2one('maintenance.equipment',string="Equipo Caja:", tracking=True, required=True)
+    project_id = fields.Many2one('project.project',string="Project")
 
     #id|
     # name|                     <> '[MP-001] CAÑA DE AZUCAR'
