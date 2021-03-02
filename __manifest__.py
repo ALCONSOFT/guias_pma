@@ -12,7 +12,9 @@
         - ventas (venta de servicio de gestion de fincas)
         Para ver la información que proviene de las.
         - 2021-02-13: Agregar campo proyecto_id al modelo: purchase_line y las vistas relacionadas.
-                    - Campos: project_id, caja, alce y contrato
+                    - Campos: project_id, caja, alce y contrato.
+        - 2021-02-19: Pantalla de Bitacora de Acarreo.
+        - 2021-02-26: Agregando valores por default a: project_id, caja, alce y contrato.
     """,
 
     'author': "Alconsoft",
@@ -22,7 +24,7 @@
     # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'Uncategorized',
-    'version': '0.2021-02-13 - 17:16 ',
+    'version': '0.2021-02-26 - 16:30 ',
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'stock', 'fincas_pma'],
