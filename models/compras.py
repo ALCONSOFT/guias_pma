@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
+from openerp import exceptions
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
+#from odoo.exceptions import AccessError, UserError, ValidationError
 # HERENCIA - AMPLIANDO APLICACIONES EXISTENTES
 #    AHORA AGREGAREMOS UNOS CAMPOS A UN MODELO EXISTENTE;  EN ESTE CASO SERIA EL MODELO
 #    PROYECTO EL CAMPO A AGREGAR ES: fincas_pma EN EL NOMBRE DEL MODELO:
@@ -8,7 +11,6 @@ from odoo import models, fields, api
     
 class GuiasPurchase_Order(models.Model):
     _inherit = 'purchase.order'
-    
     
     active = fields.Boolean('Activo', default=True)
     secuencia_guia = fields.Integer(string="-Secuencia_guia")
@@ -83,8 +85,15 @@ class GuiasPurchase_Order(models.Model):
     cant_cajas = fields.Integer(string="-Cant. Cajas", tracking=True)
     # 2021-01-09 - 04:15
     turno = fields.Char('-Turno', tracking=True)
-    uplote = fields.Char(string='-UP.Lote', tracking=True, store=True, compute='_onchange_uplote', required=True)
-    
+    uplote = fields.Char(string='-UP.Lote', tracking=True, store=True, compute='_onchange_uplote', required=False)
+    # 2021-03-02 - 19:13 [Mismo modelo]
+    project_id = fields.Many2one('project.project',string="Project", default=1)
+
+    def _compute_jocker(self):
+        self.project_id = 1
+        self.jocker_id = 1
+        
+
     @api.depends('up','lote')
     def _onchange_uplote(self):
         lc_uplote = ''
@@ -95,7 +104,23 @@ class GuiasPurchase_Order(models.Model):
             self.uplote = self.up.code_up + '-' + self.lote
             lc_uplote = self.uplote
             print('Con UP:', lc_uplote)
-        return lc_uplote    
+        return lc_uplote
+
+    @api.onchange('order_line.project_id')
+    def onchange_project_line_e(self):
+        lid_project = self.project_id
+        #self.order_id = lid_project
+        # Trabajando con el entorno del Servidor
+        #oc1_id = self.order_id
+        #oc1 = self.env['purchase.order'].search([('name', 'like', 'oc1_id')])
+        #print(oc1.project_id)
+        #oc1.project_id =  lid_project
+        #GuiasPurchase_Order._compute_jocker
+        raise exceptions.Warning('Proyecto Seleccioando Encabezado: %s' % lid_project.name)
+        print("Proyecto Seleccionado: ", self.project_id.name)
+        
+        return
+
 
 class GuiasPurchase_OrderLine(models.Model):
     _inherit = 'purchase.order.line'
@@ -106,38 +131,73 @@ class GuiasPurchase_OrderLine(models.Model):
     tara = fields.Float("-Tara [Lbs]", tracking=True)
     neto = fields.Float("-Neto [Lbs]", tracking=True)
     # 2021-02-13: 14:25
-    contrato = fields.Many2one('maintenance.equipment',string="Equipo Acarreo:", tracking=True, required=True)
-    alce = fields.Many2one('maintenance.equipment',string="Equipo CyA:", tracking=True, required=True)
-    caja = fields.Many2one('maintenance.equipment',string="Equipo Caja:", tracking=True, required=True)
-    project_id = fields.Many2one('project.project',string="Project")
+    contrato = fields.Many2one('maintenance.equipment',string="Equipo Acarreo:", tracking=True, default=1)
+    alce = fields.Many2one('maintenance.equipment',string="Equipo CyA:", tracking=True, default=1)
+    caja = fields.Many2one('maintenance.equipment',string="Equipo Caja:", tracking=True, default=1)
+    project_id = fields.Many2one('project.project',string="Project", default=1)
 
-    #id|
-    # name|                     <> '[MP-001] CAÑA DE AZUCAR'
-    # sequence|                 <> 10
-    # product_qty|              <> lbs -> Kg x1.0
-    # product_uom_qty|          <> lbs -> Kg x1.0 
-    # date_planned|
-    # product_uom|              <> 1
-    # product_id|               <> 2 - [MP-001]
-    # price_unit|               <> 0.00
-    # price_subtotal|           <> 0.00
-    # price_total|              <> 0.00
-    # price_tax|                <> 0.00
-    # order_id|                 <> viene del encabezado!!!
-    # account_analytic_id|
-    # company_id|               <> 1
-    # state|                    <> 'purchase'
-    # qty_invoiced|     
-    # qty_received_method|      <> 'stock_moves'
-    # qty_received|             <?> 0.00
-    # qty_received_manual|      <?> 0.00
-    # qty_to_invoice|
-    # partner_id|               <> Proveedor
-    # currency_id|              <> 16 ??
-    # display_type|
-    # create_uid|
-    # create_date|
-    # write_uid|
-    # write_date|
-    # sale_order_id|
-    # sale_line_id|
+class BitacoraEstatus(models.Model):
+    _name = "guias_pma.estatus"
+    _description = "Estatus de Bitacra de Acarrero"
+
+    name = fields.Char('Nombre del Estatus', required=True)
+    active = fields.Boolean('Activo', default=True)
+    code_estatus = fields.Char('Código de Estatus', required=True)
+    description = fields.Text(string='Descripción')
+    color_name = fields.Char("Nombre Color")
+    color = fields.Integer('Color Index')
+
+    _sql_constraints = [
+        ('code_estatus_unique',
+         'UNIQUE(code_estatus)',
+         "El código de Estatus debe ser único"),
+
+        ('name_unique',
+         'UNIQUE(name)',
+         "El nombre del Esattus debe ser único"),
+    ]    
+
+
+class BitacoraEventos(models.Model):
+    _name = "guias_pma.eventos"
+    _description = "Eventos de Bitacra de Acarrero"
+
+    name = fields.Char('Nombre del Evento:', required=True)
+    active = fields.Boolean('Activo', default=True)
+    code_evento = fields.Char('Código de Evento', required=True)
+    description = fields.Text(string='Descripción')
+
+    _sql_constraints = [
+        ('code_evento_unique',
+         'UNIQUE(code_evento)',
+         "El código de Evento debe ser único"),
+
+        ('name_unique',
+         'UNIQUE(name)',
+         "El nombre del Evento debe ser único"),
+    ]    
+
+    
+    class BitacoraAcarreo(models.Model):
+        _name = 'guias_pma.bitacoraacarreo'
+        _description = 'Bitacora de Acarreo'
+        _check_company_auto = True
+        ############################
+        name = fields.Char('Nombre Evento', required=False)
+        active = fields.Boolean('Activo', default=True)
+        code_evento = fields.Many2one('guias_pma.eventos', string='Evento', default=1, trackig=True)
+        code_estatus = fields.Many2one('guias_pma.estatus', string='Estatus', default=5, trackig=True)
+        description = fields.Text(string='Descripción', trackig=True)
+        company_id = fields.Many2one('res.company', store=True, readonly=False, default=lambda self: self.env.company, required=True)
+        employee_in_charge = fields.Many2one('hr.employee', string='Empleado', tracking=True)
+        frente = fields.Many2one('fincas_pma.frentes', string = 'Frente', tracking=True)
+        projects_id = fields.Many2one('project.project',string="Project", default=1, trackig=True)
+        contrato = fields.Many2one('maintenance.equipment',string="Equipo:", tracking=True, required=True)
+        fechahora = fields.Datetime('Fecha Hora Cosecha', tracking=True,default=fields.Datetime.now)
+        fecha = fields.Date('Fecha Cosecha', tracking=True, store=True,default=fields.Datetime.now)
+        guia1 = fields.Char('N° Guia 1:', index=True, copy=False, default='0000000000', trackig=True)
+        tickete1 = fields.Char('N° Tickete 1:', index=True, copy=False, default='000000', trackig=True)
+        guia2 = fields.Char('N° Guia 2:', index=True, copy=False, default='0000000000', trackig=True)
+        tickete2 = fields.Char('N° Tickete 2:', index=True, copy=False, default='000000', trackig=True) 
+        user_id = fields.Many2one(compute='_compute_user_id', store=True, readonly=False, trackig=True)
+        
