@@ -136,23 +136,68 @@ class GuiasPurchase_OrderLine(models.Model):
     caja = fields.Many2one('maintenance.equipment',string="Equipo Caja:", tracking=True, default=1)
     project_id = fields.Many2one('project.project',string="Project", default=1)
 
+class BitacoraEstatus(models.Model):
+    _name = "guias_pma.estatus"
+    _description = "Estatus de Bitacra de Acarrero"
 
+    name = fields.Char('Nombre del Estatus', required=True)
+    active = fields.Boolean('Activo', default=True)
+    code_estatus = fields.Char('Código de Estatus', required=True)
+    description = fields.Text(string='Descripción')
+    color_name = fields.Char("Nombre Color")
+    color = fields.Integer('Color Index')
+
+    _sql_constraints = [
+        ('code_estatus_unique',
+         'UNIQUE(code_estatus)',
+         "El código de Estatus debe ser único"),
+
+        ('name_unique',
+         'UNIQUE(name)',
+         "El nombre del Esattus debe ser único"),
+    ]    
+
+
+class BitacoraEventos(models.Model):
+    _name = "guias_pma.eventos"
+    _description = "Eventos de Bitacra de Acarrero"
+
+    name = fields.Char('Nombre del Evento:', required=True)
+    active = fields.Boolean('Activo', default=True)
+    code_evento = fields.Char('Código de Evento', required=True)
+    description = fields.Text(string='Descripción')
+
+    _sql_constraints = [
+        ('code_evento_unique',
+         'UNIQUE(code_evento)',
+         "El código de Evento debe ser único"),
+
+        ('name_unique',
+         'UNIQUE(name)',
+         "El nombre del Evento debe ser único"),
+    ]    
+
+    
     class BitacoraAcarreo(models.Model):
         _name = 'guias_pma.bitacoraacarreo'
         _description = 'Bitacora de Acarreo'
         _check_company_auto = True
         ############################
-        name = fields.Char('Nombre Evento', required=True)
+        name = fields.Char('Nombre Evento', required=False)
         active = fields.Boolean('Activo', default=True)
-        code_evento = fields.Char('Referencia Evento', required=True)
-        description = fields.Text(string='Descripción')
-        employee_in_charge = fields.Many2one('hr.employee', string='Empleado', tracking=True, domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
+        code_evento = fields.Many2one('guias_pma.eventos', string='Evento', default=1, trackig=True)
+        code_estatus = fields.Many2one('guias_pma.estatus', string='Estatus', default=5, trackig=True)
+        description = fields.Text(string='Descripción', trackig=True)
+        company_id = fields.Many2one('res.company', store=True, readonly=False, default=lambda self: self.env.company, required=True)
+        employee_in_charge = fields.Many2one('hr.employee', string='Empleado', tracking=True)
         frente = fields.Many2one('fincas_pma.frentes', string = 'Frente', tracking=True)
-        projects_id = fields.Many2one('project.project',string="Project", default=1)
+        projects_id = fields.Many2one('project.project',string="Project", default=1, trackig=True)
         contrato = fields.Many2one('maintenance.equipment',string="Equipo:", tracking=True, required=True)
-        fechahora = fields.Datetime('Fecha Hora Cosecha', tracking=True)
-        fecha = fields.Date('Fecha Cosecha', tracking=True, store=True)
-        guia1 = fields.Char('N° Guia 1:', index=True, copy=False, default='0000000000')
-        tickete1 = fields.Char('N° Tickete 1:', index=True, copy=False, default='000000')
-        guia2 = fields.Char('N° Guia 2:', index=True, copy=False, default='0000000000')
-        tickete2 = fields.Char('N° Tickete 2:', index=True, copy=False, default='000000') 
+        fechahora = fields.Datetime('Fecha Hora Cosecha', tracking=True,default=fields.Datetime.now)
+        fecha = fields.Date('Fecha Cosecha', tracking=True, store=True,default=fields.Datetime.now)
+        guia1 = fields.Char('N° Guia 1:', index=True, copy=False, default='0000000000', trackig=True)
+        tickete1 = fields.Char('N° Tickete 1:', index=True, copy=False, default='000000', trackig=True)
+        guia2 = fields.Char('N° Guia 2:', index=True, copy=False, default='0000000000', trackig=True)
+        tickete2 = fields.Char('N° Tickete 2:', index=True, copy=False, default='000000', trackig=True) 
+        user_id = fields.Many2one(compute='_compute_user_id', store=True, readonly=False, trackig=True)
+        

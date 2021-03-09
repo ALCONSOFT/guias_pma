@@ -58,4 +58,95 @@
         </field>
     </record>
 
+    <!--Vista Bitacora log Tree-->
+        <record id="guias_pma_bitacora_log_tree" model="ir.ui.view">
+            <field name="name">guias_pma.bitacoraacarreo.tree</field>
+            <field name="model">guias_pma.bitacoraacarreo</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree editable="top" string="Eventos Bitacora Log" sample="1">
+                    <field name="name" optional="hide" required="0"/>
+                    <field name="code_evento" optional="show"/>
+                    <field name="fechahora"/>
+                    <field name="fecha" optional="show"/>
+                    <field name="contrato"/>
+                    <field name="employee_in_charge" optional="show" invisible="1"/>
+                    <field name="projects_id" required="1" options="{'no_create_edit': True}" context="{'form_view_ref': 'project.project_project_view_form_simplified',}"/>
+                    <field name="frente" optional="show"/>
+                    <field name="guia1" optional="show" required="0"/>
+                    <field name="tickete1" optional="show" required="0"/>
+                    <field name="guia2" optional="show" required="0"/>
+                    <field name="tickete2" optional="show" required="0"/>
+                    <field name="code_estatus" optional="show" required="0"/>
+                    <field name="user_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+    
+    <!--Vista Bitacora Estatus-->
+        <record id="guias_pma_bitacora_estatus_tree" model="ir.ui.view">
+            <field name="name">guias_pma.estatus.tree</field>
+            <field name="model">guias_pma.estatus</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree editable="top" string="Esttus de Equipos Y Maqs." sample="1">
+                    <field name="name"/>
+                    <field name="code_estatus"/>
+                    <field name="description"/>
+                    <field name="color_name"/>
+                    <field name="color"/>
+                </tree>
+            </field>
+        </record>
+
+    <!-- Top menu item 
+    <menuitem name="Purchase"
+        id="menu_purchase_root"
+        groups="group_purchase_manager,group_purchase_user"
+        web_icon="purchase,static/description/icon.png"
+        sequence="25"/>
+    <record model="ir.actions.act_window" id="fincas_pma.action_window">
+      <field name="name">fincas_pma window</field>
+      <field name="res_model">fincas_pma.fincas_pma</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+    <!--Action: Bitacora Log-->
+    <record model="ir.actions.act_window" id="guias_pma.action_bitacora_log">
+        <field name="name">Bitácora de Equipos y Maq.</field>
+        <field name="res_model">guias_pma.bitacoraacarreo</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="guias_pma_bitacora_log_tree"/>
+        <!--
+        <field name="search_view_id" ref="view_bitacoraacarreo_filter"/>      
+        <field name="target">main</field>
+        -->
+    </record>
+    <!--Action Bitacora Estatus-->
+    <record model="ir.actions.act_window" id="guias_pma.action_bitacora_estatus">
+        <field name="name">Estatus de Equipos y Maq.</field>
+        <field name="res_model">guias_pma.estatus</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="guias_pma_bitacora_estatus_tree"/>
+    </record>
+
+    <!--Menu: Bitacora log-->
+<menuitem id="menu_bitacora_log_opciones"
+    name="Bitácora"
+    parent="purchase.menu_purchase_root"
+    sequence="11"/>
+
+    <menuitem id="menu_bitacora_logistica"
+        name="Bitacora Logistica de Equipo"
+        parent="menu_bitacora_log_opciones"
+        sequence="20"
+        action="action_bitacora_log"/>
+
+    <menuitem id="menu_bitacora_estatus"
+        name="Estatus de Equipo"
+        parent="menu_bitacora_log_opciones"
+        sequence="30"
+        action="action_bitacora_estatus"/>
+
+
 </odoo>

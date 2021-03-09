@@ -15,6 +15,8 @@
                     - Campos: project_id, caja, alce y contrato.
         - 2021-02-19: Pantalla de Bitacora de Acarreo.
         - 2021-02-26: Agregando valores por default a: project_id, caja, alce y contrato.
+        - 2021-03-08: Agregando al Menu Formulario: Bitácora de Logistica o Estatus de Equipo de Acarreo.
+        - 2021-03-09: Agregando Maestro de Estatus y Eventos a la Bitacora de Eventos de Acarreo.
     """,
 
     'author': "Alconsoft",
@@ -24,7 +26,7 @@
     # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'Uncategorized',
-    'version': '0.2021-02-26 - 16:30 ',
+    'version': '2021-03-09 - 09:26',
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'stock', 'fincas_pma'],
@@ -33,13 +35,16 @@
     # IMPORTANTE: SE QUITA EL CARACTER "#" PARA QUE SE PUEDA CARGAR ARCHIVO CON LA LISTA DE ACCESO DE SEGURIDAD
     'data': [
         ####### ESTO IMPEDIA QUE SE PUDIERA VER EL MENU ########################
-        #'security/ir.model.access.csv',
         ###############################
+        'security/bitacora_security.xml',
+        'security/ir.model.access.csv',
         'views/compras_views.xml',
-        #'views/views_ventas.xml',
+        'views/bitacora_acarreo.xml',
         #'views/templates.xml',
         ####### CARGA AUTOMATICA AL INSTALAR DE DATOS ESTATICOS ########################
         'static/xls/product.template.csv',
+        'static/xls/guias_pma.estatus.csv',
+        'static/xls/guias_pma.eventos.csv',
         ###############################
     ],
     # only loaded in demonstration mode
