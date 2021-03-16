@@ -177,27 +177,50 @@ class BitacoraEventos(models.Model):
          "El nombre del Evento debe ser único"),
     ]    
 
-    
-    class BitacoraAcarreo(models.Model):
-        _name = 'guias_pma.bitacoraacarreo'
-        _description = 'Bitacora de Acarreo'
-        _check_company_auto = True
-        ############################
-        name = fields.Char('Nombre Evento', required=False)
-        active = fields.Boolean('Activo', default=True)
-        code_evento = fields.Many2one('guias_pma.eventos', string='Evento', default=1, trackig=True)
-        code_estatus = fields.Many2one('guias_pma.estatus', string='Estatus', default=5, trackig=True)
-        description = fields.Text(string='Descripción', trackig=True)
-        company_id = fields.Many2one('res.company', store=True, readonly=False, default=lambda self: self.env.company, required=True)
-        employee_in_charge = fields.Many2one('hr.employee', string='Empleado', tracking=True)
-        frente = fields.Many2one('fincas_pma.frentes', string = 'Frente', tracking=True)
-        projects_id = fields.Many2one('project.project',string="Project", default=1, trackig=True)
-        contrato = fields.Many2one('maintenance.equipment',string="Equipo:", tracking=True, required=True)
-        fechahora = fields.Datetime('Fecha Hora Cosecha', tracking=True,default=fields.Datetime.now)
-        fecha = fields.Date('Fecha Cosecha', tracking=True, store=True,default=fields.Datetime.now)
-        guia1 = fields.Char('N° Guia 1:', index=True, copy=False, default='0000000000', trackig=True)
-        tickete1 = fields.Char('N° Tickete 1:', index=True, copy=False, default='000000', trackig=True)
-        guia2 = fields.Char('N° Guia 2:', index=True, copy=False, default='0000000000', trackig=True)
-        tickete2 = fields.Char('N° Tickete 2:', index=True, copy=False, default='000000', trackig=True) 
-        user_id = fields.Many2one(compute='_compute_user_id', store=True, readonly=False, trackig=True)
+class BitacoraAcarreo(models.Model):
+    _name = 'guias_pma.bitacoraacarreo'
+    _description = 'Bitacora de Acarreo'
+    _check_company_auto = True
+    ############################
+    name = fields.Char('Nombre Evento', required=False)
+    active = fields.Boolean('Activo', default=True)
+    code_evento = fields.Many2one('guias_pma.eventos', string='Evento', default=1, trackig=True)
+    code_estatus = fields.Many2one('guias_pma.estatus', string='Estatus', default=5, trackig=True)
+    description = fields.Text(string='Descripción', trackig=True)
+    company_id = fields.Many2one('res.company', store=True, readonly=False, default=lambda self: self.env.company, required=True)
+    employee_in_charge = fields.Many2one('hr.employee', string='Empleado', tracking=True)
+    frente = fields.Many2one('fincas_pma.frentes', string = 'Frente', tracking=True)
+    projects_id = fields.Many2one('project.project',string="Project", default=1, trackig=True)
+    contrato = fields.Many2one('maintenance.equipment',string="Equipo:", tracking=True, required=True)
+    fechahora = fields.Datetime('Fecha Hora Cosecha', tracking=True,default=fields.Datetime.now)
+    fecha = fields.Date('Fecha Cosecha', tracking=True, store=True,default=fields.Datetime.now)
+    guia1 = fields.Char('N° Guia 1:', index=True, copy=False, default='0000000000', trackig=True)
+    tickete1 = fields.Char('N° Tickete 1:', index=True, copy=False, default='000000', trackig=True)
+    guia2 = fields.Char('N° Guia 2:', index=True, copy=False, default='0000000000', trackig=True)
+    tickete2 = fields.Char('N° Tickete 2:', index=True, copy=False, default='000000', trackig=True) 
+    user_id = fields.Many2one(compute='_compute_user_id', store=True, readonly=False, trackig=True)
         
+class BitacoraAca_Col(models.Model):
+    _name = 'guias_pma.bitacoraaca_col'
+    _description = 'Bitacora de Acarreo por Columna'
+    _check_company_auto = True
+    ############################
+    name = fields.Char('Nombre Evento', required=False)
+    active = fields.Boolean('Activo', default=True)
+    code_estatus = fields.Many2one('guias_pma.estatus', string='Estatus', default=5, trackig=True)
+    description = fields.Text(string='Descripción', trackig=True)
+    company_id = fields.Many2one('res.company', store=True, readonly=False, default=lambda self: self.env.company, required=True)
+    employee_in_charge = fields.Many2one('hr.employee', string='Empleado', tracking=True)
+    frente = fields.Many2one('fincas_pma.frentes', string = 'Frente', tracking=True)
+    projects_id = fields.Many2one('project.project',string="Project", default=1, trackig=True)
+    contrato = fields.Many2one('maintenance.equipment',string="Equipo:", tracking=True, required=True)
+    guia1 = fields.Char('N° Guia 1:', index=True, copy=False, default='0000000000', trackig=True)
+    tickete1 = fields.Char('N° Tickete 1:', index=True, copy=False, default='000000', trackig=True)
+    guia2 = fields.Char('N° Guia 2:', index=True, copy=False, default='0000000000', trackig=True)
+    tickete2 = fields.Char('N° Tickete 2:', index=True, copy=False, default='000000', trackig=True) 
+    user_id = fields.Many2one(compute='_compute_user_id', store=True, readonly=False, trackig=True)
+    fechahora_sal_fre = fields.Datetime('Fecha Hora Sal. Fre.', tracking=True,default=fields.Datetime.now)
+    fechahora_lle_pes = fields.Datetime('Fecha Hora Lle. Pes.', tracking=True,default=fields.Datetime.now)
+    fechahora_pesado = fields.Datetime('Fecha Hora Pesado', tracking=True,default=fields.Datetime.now)
+    fechahora_des_pat = fields.Datetime('Fecha Hora des. Pat.', tracking=True,default=fields.Datetime.now)
+    fechahora_ret_fre = fields.Datetime('Fecha Hora Ret. Fre.', tracking=True,default=fields.Datetime.now)

@@ -17,6 +17,7 @@
         - 2021-02-26: Agregando valores por default a: project_id, caja, alce y contrato.
         - 2021-03-08: Agregando al Menu Formulario: Bitácora de Logistica o Estatus de Equipo de Acarreo.
         - 2021-03-09: Agregando Maestro de Estatus y Eventos a la Bitacora de Eventos de Acarreo.
+        - 2021-03-16: Agrenfo otra Bitacora por Columna
     """,
 
     'author': "Alconsoft",
@@ -26,7 +27,7 @@
     # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'Uncategorized',
-    'version': '2021-03-09 - 09:26',
+    'version': '2021-03-16 - 14:45',
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'stock', 'fincas_pma'],

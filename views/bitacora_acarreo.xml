@@ -59,30 +59,58 @@
     </record>
 
     <!--Vista Bitacora log Tree-->
-        <record id="guias_pma_bitacora_log_tree" model="ir.ui.view">
-            <field name="name">guias_pma.bitacoraacarreo.tree</field>
-            <field name="model">guias_pma.bitacoraacarreo</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree editable="top" string="Eventos Bitacora Log" sample="1">
-                    <field name="name" optional="hide" required="0"/>
-                    <field name="code_evento" optional="show"/>
-                    <field name="fechahora"/>
-                    <field name="fecha" optional="show"/>
-                    <field name="contrato"/>
-                    <field name="employee_in_charge" optional="show" invisible="1"/>
-                    <field name="projects_id" required="1" options="{'no_create_edit': True}" context="{'form_view_ref': 'project.project_project_view_form_simplified',}"/>
-                    <field name="frente" optional="show"/>
-                    <field name="guia1" optional="show" required="0"/>
-                    <field name="tickete1" optional="show" required="0"/>
-                    <field name="guia2" optional="show" required="0"/>
-                    <field name="tickete2" optional="show" required="0"/>
-                    <field name="code_estatus" optional="show" required="0"/>
-                    <field name="user_id" invisible="1"/>
-                </tree>
-            </field>
-        </record>
+    <record id="guias_pma_bitacora_log_tree" model="ir.ui.view">
+        <field name="name">guias_pma.bitacoraacarreo.tree</field>
+        <field name="model">guias_pma.bitacoraacarreo</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree editable="top" string="Eventos Bitacora Log" sample="1">
+                <field name="name" optional="hide" required="0"/>
+                <field name="code_evento" optional="show"/>
+                <field name="fechahora"/>
+                <field name="fecha" optional="show"/>
+                <field name="contrato"/>
+                <field name="employee_in_charge" optional="show" invisible="1"/>
+                <field name="projects_id" required="1" options="{'no_create_edit': True}" context="{'form_view_ref': 'project.project_project_view_form_simplified',}"/>
+                <field name="frente" optional="show"/>
+                <field name="guia1" optional="show" required="0"/>
+                <field name="tickete1" optional="show" required="0"/>
+                <field name="guia2" optional="show" required="0"/>
+                <field name="tickete2" optional="show" required="0"/>
+                <field name="code_estatus" optional="show" required="0"/>
+                <field name="user_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
     
+    <!--Vista Bitacora log Column Tree-->
+    <record id="guias_pma_bitacora_log_tree_column" model="ir.ui.view">
+        <field name="name">guias_pma.bitacoraacarreocolumn.tree</field>
+        <field name="model">guias_pma.bitacoraaca_col</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree editable="top" string="Eventos Bitacora Log" sample="1">
+                <field name="name" optional="hide" required="0"/>
+                <field name="contrato"/>
+                <field name="employee_in_charge" optional="show" invisible="1"/>
+                <field name="projects_id" required="1" options="{'no_create_edit': True}" context="{'form_view_ref': 'project.project_project_view_form_simplified',}"/>
+                <field name="frente" optional="show"/>
+                <field name="guia1" optional="show" required="0"/>
+                <field name="tickete1" optional="show" required="0"/>
+                <field name="guia2" optional="show" required="0"/>
+                <field name="tickete2" optional="show" required="0"/>
+                <field name="code_estatus" optional="show" required="0"/>
+                <field name="user_id" invisible="1"/>
+                <field name="fechahora_sal_fre" optional="show"/>
+                <field name="fechahora_lle_pes" optional="show"/>
+                <field name="fechahora_pesado" optional="show"/>
+                <field name="fechahora_des_pat" optional="show"/>
+                <field name="fechahora_ret_fre" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+
     <!--Vista Bitacora Estatus-->
         <record id="guias_pma_bitacora_estatus_tree" model="ir.ui.view">
             <field name="name">guias_pma.estatus.tree</field>
@@ -122,6 +150,15 @@
         <field name="target">main</field>
         -->
     </record>
+
+    <!--Action: Bitacora Log Columna-->
+    <record model="ir.actions.act_window" id="guias_pma.action_bitacora_log_col">
+        <field name="name">Bitácora de Equipos y Maq. por Columna</field>
+        <field name="res_model">guias_pma.bitacoraaca_col</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="guias_pma_bitacora_log_tree_column"/>
+    </record>
+
     <!--Action Bitacora Estatus-->
     <record model="ir.actions.act_window" id="guias_pma.action_bitacora_estatus">
         <field name="name">Estatus de Equipos y Maq.</field>
@@ -137,10 +174,16 @@
     sequence="11"/>
 
     <menuitem id="menu_bitacora_logistica"
-        name="Bitacora Logistica de Equipo"
+        name="Bitacora Logistica de Equipo por Fila"
         parent="menu_bitacora_log_opciones"
         sequence="20"
         action="action_bitacora_log"/>
+
+    <menuitem id="menu_bitacora_logistica"
+        name="Bitacora Logistica de Equipo por Columna"
+        parent="menu_bitacora_log_opciones"
+        sequence="30"
+        action="action_bitacora_log_col"/>
 
     <menuitem id="menu_bitacora_estatus"
         name="Estatus de Equipo"

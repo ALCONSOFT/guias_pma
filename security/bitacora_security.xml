@@ -20,6 +20,17 @@
         <field name="implied_ids" eval="[(4, ref('group_bitacoraacarreo_user'))]"/>
         <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
     </record>
+    <record id="group_bitacoraacarreocolumn_user" model="res.groups">
+        <field name="name">User Bitacora Columna</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="category_id" ref="bitacora_log"/>
+    </record>
+    <record id="group_bitacoraacarreocolumn_manager" model="res.groups">
+        <field name="name">Administrator Bitacora Columna</field>
+        <field name="category_id" ref="bitacora_log"/>
+        <field name="implied_ids" eval="[(4, ref('group_bitacoraacarreocolumn_user'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
     
     <!--
     <record id="group_send_reminder" model="res.groups">
