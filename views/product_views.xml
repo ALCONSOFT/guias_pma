@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_kanban_view_guias_inh" model="ir.ui.view">
+        <field name="name">Product Template Kanban Guias Inh</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_kanban_view" />
+        <field name="arch" type="xml">
+            <field name="lst_price" position="after">
+                <field name="volume"/>
+                <field name="weight"/>
+            </field>
+            <xpath expr="//div[hasclass('oe_kanban_details')]" position="inside">
+                <span>Volumen: </span>
+                <span><t t-esc="record.volume.value"/></span>
+                <span>Peso: </span>
+                <span><t t-esc="record.weight.value"/></span>
+            </xpath>
+        </field>
+    </record>
+</odoo>

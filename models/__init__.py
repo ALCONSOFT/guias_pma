@@ -2,4 +2,5 @@
 
 from . import compras
 from . import bitacora
+from . import productos
 
