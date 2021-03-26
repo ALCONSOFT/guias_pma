@@ -17,7 +17,11 @@
         - 2021-02-26: Agregando valores por default a: project_id, caja, alce y contrato.
         - 2021-03-08: Agregando al Menu Formulario: Bitácora de Logistica o Estatus de Equipo de Acarreo.
         - 2021-03-09: Agregando Maestro de Estatus y Eventos a la Bitacora de Eventos de Acarreo.
-        - 2021-03-16: Agrenfo otra Bitacora por Columna
+        - 2021-03-16: Agregando otra Bitacora por Columna.
+        - 2021-03-19: Agregando llave única a modelo product.template.
+                    - Kanban: agregar campo volumen a Kanban.
+        - 2021-03-22: Agregando reporte de Bitacora por Acarreo y por Corte y Alce.
+        - 2021-03-25: Bis
     """,
 
     'author': "Alconsoft",
@@ -27,7 +31,7 @@
     # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'Uncategorized',
-    'version': '2021-03-16 - 14:45',
+    'version': '2021-03-25 - 18:00',
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'stock', 'fincas_pma'],
@@ -41,11 +45,15 @@
         'security/ir.model.access.csv',
         'views/compras_views.xml',
         'views/bitacora_acarreo.xml',
+        'views/product_views.xml',
         #'views/templates.xml',
         ####### CARGA AUTOMATICA AL INSTALAR DE DATOS ESTATICOS ########################
         'static/xls/product.template.csv',
         'static/xls/guias_pma.estatus.csv',
         'static/xls/guias_pma.eventos.csv',
+        #" reportes graficos y pivots"
+        'reports/bitacora_reports.xml',
+        'reports/bitacora_report_views.xml',
         ###############################
     ],
     # only loaded in demonstration mode

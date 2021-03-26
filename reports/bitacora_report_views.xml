@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record model="ir.ui.view" id="view_bitacora_report_pivot">
+            <field name="name">bitacora.month.pivot</field>
+            <field name="model">guias_pma.bitacora_report</field>
+            <field name="arch" type="xml">
+                <pivot string="Reporte Pivote de Bitacora" disable_linking="True" display_quantity="true" sample="1">
+                    <field name="lote_hora" type="row"/>
+                    <field name="neto_ton" type="measure"/>
+                    <field name="frente" type="column"/>
+                    <field name="contrato" type="column"/>
+                </pivot>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_bitacora_report_graph">
+            <field name="name">bitacora.month.graph</field>
+            <field name="model">guias_pma.bitacora_report</field>
+            <field name="arch" type="xml">
+                <graph string="Grafica de Bitacora" type="line" sample="1" disable_linking="1">
+                    <field name="lote_hora" interval="hour" type="col"/>
+                    <field name="neto_ton" type="measure"/>
+                </graph>
+            </field>
+        </record>
+        <!--
+        <record id="view_bitacora_report_search" model="ir.ui.view">
+        <field name="name">report.bitacora.report.search</field>
+        <field name="model">bitacora.report</field>
+        <field name="arch" type="xml">
+            <search string="Reporte Bitacora">
+                <filter string="Requests for Quotation" name="quotes" domain="[('state','in',('draft','sent'))]"/>
+                <filter string="Sample Orders" name="orders" domain="[('state','!=','draft'), ('state','!=','sent'), ('state','!=','cancel')]"/>
+                <filter string="Confirmation Date Last Year" name="later_than_a_year_ago" domain="[('date_approve', '&gt;=', ((context_today()-relativedelta(years=1)).strftime('%Y-%m-%d')))]"/>
+                <filter name="filter_date_order" date="date_order"/>
+                <filter name="filter_date_approve" date="date_approve" default_period="this_month"/>
+                <field name="partner_id"/>
+                <field name="product_id"/>
+                <group expand="0" string="Extended Filters">
+                    <field name="user_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="date_order"/>
+                    <field name="date_approve"/>
+                    <field name="category_id" filter_domain="[('category_id', 'child_of', self)]"/>
+                </group>
+                <group expand="1" string="Group By">
+                    <filter string="Vendor" name="group_partner_id" context="{'group_by':'partner_id'}"/>
+                    <filter string="Vendor Country" name="country_id" context="{'group_by':'country_id'}"/>
+                    <filter string="Sample Representative" name="user_id" context="{'group_by':'user_id'}"/>
+                    <filter string="Product" name="group_product_id" context="{'group_by':'product_id'}"/>
+                    <filter string="Product Category" name="group_category_id" context="{'group_by':'category_id'}"/>
+                    <filter string="Status" name="status" context="{'group_by':'state'}"/>
+                    <filter string="Company" name="company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                    <separator/>
+                    <filter string="Order Date" name="order_month" context="{'group_by': 'date_order:month'}"/>
+                    <filter string="Confirmation Date" name="group_date_approve_month" context="{'group_by': 'date_approve:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    -->
+
+    <record id="action_bitacora_report_all" model="ir.actions.act_window">
+        <field name="name">Reporte Bitacora</field>
+        <field name="res_model">guias_pma.bitacora_report</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="view_id"></field>  <!-- force empty -->
+        <field name="help">Reporte de Biatcora de Acarreos - Pivote y Gráfica</field>
+        <field name="target">current</field>
+    </record>
+
+    <menuitem id="bitacora_report"
+        name="Reportes de Bitacora - Guias Acarreo"
+        parent="menu_bitacora_log_opciones"
+        sequence="60"
+        action="action_bitacora_report_all"/>
+
+</odoo>
