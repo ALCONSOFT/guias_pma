@@ -1,0 +1,148 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="planning_log_form_view">
+      <field name="name">guias_pma.planning_log.form</field>
+      <field name="model">guias_pma.planning_log</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="name"/>
+            <field name="active"/>
+            <field name="code_estatus"/>
+            <field name="ano"/>
+            <field name="zafra"/>
+            <field name="dia_zafra"/>
+            <field name="turno"/>
+            <field name="lote_hora_inicial"/>
+            <field name="lote_hora_final"/>
+            <field name="horas_estimadas"/>
+            <field name="qty_acarreo_estimated"/>
+            <field name="qty_acarreo_estimated_max"/>
+            <field name="qty_acarreo_estimated_min"/>
+            <field name="qty_almacen_estimated"/>
+            <field name="description"/>
+            <field name="company_id"/>
+            <field name="employee_in_charge"/>
+            <field name="frente"/>
+            <field name="finca"/>
+            <field name="projects_id"/>
+          </group>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="planning_log_tree_view">
+      <field name="name">guias_pma.planning_log.tree</field>
+      <field name="model">guias_pma.planning_log</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="active"/>
+          <field name="code_estatus"/>
+          <field name="ano"/>
+          <field name="zafra"/>
+          <field name="dia_zafra"/>
+          <field name="turno"/>
+          <field name="lote_hora_inicial"/>
+          <field name="lote_hora_final"/>
+          <field name="horas_estimadas"/>
+          <field name="qty_acarreo_estimated"/>
+          <field name="qty_acarreo_estimated_max" />
+          <field name="qty_acarreo_estimated_min"/>
+          <field name="qty_almacen_estimated"/>
+          <field name="description"/>
+          <field name="company_id"/>
+          <field name="employee_in_charge"/>
+          <field name="frente"/>
+          <field name="finca"/>
+          <field name="projects_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="planning_log_kanban_view">
+        <field name="name">guias_pma.planning_log.kanban</field>
+        <field name="model">guias_pma.planning_log</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="projects_id">
+                <field name="name"/>
+                <field name="code_estatus"/>
+                <field name="frente"/>
+                <field name="projects_id"/>
+                <field name="turno"/>
+                <field name="horas_estimadas"/>
+                <field name="qty_acarreo_estimated"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_card_content">
+                                <div class="oe_kanban_primary_left">
+                                    <div class="oe_kanban_content">
+                                        <div class="oe_kanban_title">
+                                            <t t-esc="record.name.value"/>
+                                        </div>
+                                        <div>
+                                            <span>
+                                                Estatus: <t t-esc="record.code_estatus.data.display_name"/>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span>
+                                                Frente: <t t-esc="record.frente.data.display_name"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="oe_kanban_bottom_left">
+                                        <div>
+                                            <span>
+                                                Proyecto: <t t-esc="record.projects_id.data.display_name"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="oe_kanban_primary_right">
+                                    <div class="oe_kanban_content">
+                                        <div>
+                                            <span>
+                                                Turno: <t t-esc="record.turno.value"/>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span>
+                                                Horas Estimadas: <t t-esc="record.horas_estimadas.value"/>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span>
+                                                Cant. Acarreo Est.: <t t-esc="record.qty_acarreo_estimated.value"/> Tons. Cortas
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!--Action -->
+    <record model="ir.actions.act_window" id="planning_log_list_action">
+      <field name="name">Planning Logs</field>
+      <field name="res_model">guias_pma.planning_log</field>
+      <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <!--Menu -->
+    <menuitem id="planning_log_menu"
+      name="Planning Logs"
+      parent="purchase.menu_purchase_root"
+      sequence="12"/>
+    
+    <menuitem id="planning_log_list_menu"
+      name="Planning Logs"
+      parent="planning_log_menu"
+      action="planning_log_list_action"/>
+
+  </data>
+</odoo>

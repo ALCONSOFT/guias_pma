@@ -22,6 +22,7 @@
                     - Kanban: agregar campo volumen a Kanban.
         - 2021-03-22: Agregando reporte de Bitacora por Acarreo y por Corte y Alce.
         - 2021-03-25: Bis
+        - 2023-02-13->14: Agregando modelo de planificacion: "planning_fincas_pma"
     """,
 
     'author': "Alconsoft",
@@ -31,7 +32,7 @@
     # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'Uncategorized',
-    'version': '2021-03-25 - 18:00',
+    'version': '2023-02-14 - 00:00',
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'stock', 'fincas_pma'],
@@ -46,6 +47,7 @@
         'views/compras_views.xml',
         'views/bitacora_acarreo.xml',
         'views/product_views.xml',
+        'views/planeacion_views.xml',
         #'views/templates.xml',
         ####### CARGA AUTOMATICA AL INSTALAR DE DATOS ESTATICOS ########################
         'static/xls/product.template.csv',

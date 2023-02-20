@@ -7,3 +7,5 @@ access_eventos,guias_pma.eventos,model_guias_pma_eventos,group_bitacoraacarreo_m
 access_bitacoraacarreocolumn,guias_pma.bitacoraacarreocolumn,model_guias_pma_bitacoraaca_col,group_bitacoraacarreocolumn_user,1,1,1,0
 access_bitacoraacarreocolumn_manager,guias_pma.bitacoraacarreocolumn.manager,model_guias_pma_bitacoraaca_col,group_bitacoraacarreocolumn_manager,1,1,1,1
 access_bitacora_report_user,guias_pma.bitacora.report.user,model_guias_pma_bitacora_report,group_bitacoraacarreo_user,1,1,1,1
+access_guias_pma_planning_log,Access Planning Logs,model_guias_pma_planning_log,base.group_user,1,1,1,0
+access_guias_pma_planning_log,Access Planning Logs,model_guias_pma_planning_log,base.group_system,1,1,1,1
